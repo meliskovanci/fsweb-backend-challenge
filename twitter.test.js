@@ -85,7 +85,7 @@ test("test environment testing olarak ayarlı", () => {
              user_id: 1
            });
            expect(newTweet).toBeDefined();
-           expect(newTweet).toMatchObject({ text: "Bu yağmurlu havalarda tam uyku havası değil mi ya ", user_id: 1 });
+           expect(newTweet).toMatchObject({ text: "Bu yağmurlu havalarda tam uyku havası değil mi ya :D", user_id: 1 });
          });
       
         test("[3] update tweet", async () => {
@@ -115,7 +115,7 @@ test("test environment testing olarak ayarlı", () => {
             tweet_id: 1,
           });
           expect(newComment).toBeDefined();
-          expect(newComment[0]).toMatchObject({
+          expect(newComment).toMatchObject({
             content: "kime göre neye göre",
             user_id: 1,
             tweet_id: 1,

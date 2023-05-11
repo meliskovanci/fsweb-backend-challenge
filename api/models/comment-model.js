@@ -30,9 +30,8 @@ const getCommentsByUserId = async (userid) => {
 };
 
 const create = async (comment) => {
-  const newComments = await db("comments").insert(comment);
-  console.log(newComments);
-  const comments = await getCommentsByUserId(newComments);
+  const [newComments] = await db("comments").insert(comment);
+  const comments = await getCommentById(newComments);
   return comments;
 };
 

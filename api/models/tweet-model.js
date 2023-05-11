@@ -8,7 +8,7 @@ function getAllTweet() {
 }
 
 async function createTweet(tweet) {
-  const newTweet = await db("tweets").insert(tweet);
+  const [newTweet] = await db("tweets").insert(tweet);
   const tweets = await getTweetsByUserId(newTweet);
   return tweets;
 }
@@ -53,8 +53,8 @@ async function getTweetById(user_id) {
   return userModel;
 }
 
-function getTweetsByUserId(userId) {
-  return db("tweets").where({ tweet_id: userId }).first();
+function getTweetsByUserId(tweet_id) {
+  return db("tweets").where({ tweet_id: tweet_id }).first();
 }
 
 async function updateTweet(id, tweet) {
