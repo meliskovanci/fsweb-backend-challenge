@@ -9,11 +9,11 @@ function getAllTweet() {
 
 async function createTweet(tweet) {
   const [newTweet] = await db("tweets").insert(tweet);
-  const tweets = await getTweetsByUserId(newTweet);
+  const tweets = await getTweetId(newTweet);
   return tweets;
 }
 
-async function getTweetById(user_id) {
+async function getTweetByUserId(user_id) {
   const tweetYorum = await db("users as u")
     .leftJoin("tweets as t", "u.user_id", "t.user_id")
     .leftJoin("comments as c", "t.tweet_id", "c.tweet_id")
@@ -53,26 +53,26 @@ async function getTweetById(user_id) {
   return userModel;
 }
 
-function getTweetsByUserId(tweet_id) {
+function getTweetId(tweet_id) {
   return db("tweets").where({ tweet_id: tweet_id }).first();
 }
 
 async function updateTweet(id, tweet) {
   await db("tweets").where({ tweet_id: id }).update(tweet);
-  return getTweetsByUserId(id);
+  return getTweetId(id);
 }
 
 async function deleteByTweetId(id) {
-  const deletedTweet = await getTweetsByUserId(id);
+  const deletedTweet = await getTweetId(id);
   await db("tweets").where({ tweet_id: id }).del();
   return deletedTweet;
 }
 
 module.exports = {
   getAllTweet,
-  getTweetsByUserId,
+  getTweetId,
   createTweet,
-  getTweetById,
+  getTweetByUserId,
   updateTweet,
   deleteByTweetId,
 };
