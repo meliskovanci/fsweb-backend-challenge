@@ -152,5 +152,57 @@ test("test environment testing olarak ayarlı", () => {
 
       })
 
+      describe("Token kontrolü", () => {
+        it("[1] token doğru mu ", async () => {
+          const token =
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJpYXQiOjE2ODM3Mjc4MjEsImV4cCI6MTY4MzgxNDIyMX0.JSvRS5BEuCEJyy_sufUbs34ELvBKm5EGI4SzSXUdn5c";
+          const res = await superTest(server)
+            .get("/api/user")
+            .set("Authorization", token);
+            expect(res.status).toBe(401)
+            expect(res.body).toMatchObject({ message: "bu token geçersizdir" });
+        });
+    
+
+      })
+      
+
+      describe("Endpoint testleri", () => {
+        describe("[GET] /", () => {
+          test("[1] server çalışıyor", async () => {
+            const res = await superTest(server).get("/");
+            expect(res.body).toMatchObject({ message: "Server is running!..." });
+            expect(res.status).toBe(200);
+          });
+        });
+
+      })
+
+
+      describe("Users____GET ", () => {
+        it("[1] doğru sayıda users geliyor mu", async () => {
+          const token =
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJpYXQiOjE2ODM4NzcwNTUsImV4cCI6MTY4Mzk2MzQ1NX0.1t1O4VKUr9-QhUMsnkzw1bRYD5H1KXJ7oDoju7tawgI";
+          const res = await superTest(server)
+            .get("/api/user")
+            .set("Authorization", token);
+          expect(res.status).toBe(200)
+          expect(res.body).toHaveLength(3);
+        });
+        it("[2] doğru id yoksa hata mesajı geliyor mu", async ()=>{
+          const token =
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJpYXQiOjE2ODM4NzcwNTUsImV4cCI6MTY4Mzk2MzQ1NX0.1t1O4VKUr9-QhUMsnkzw1bRYD5H1KXJ7oDoju7tawgI";
+        const res = await superTest(server)
+          .get("/api/user/4")
+          .set("Authorization", token);
+        expect(res.status).toBe(404)
+        expect(res.body.message).toBe("kullanıcı bulunamadı.");
+        })
+      
+       
+      });
+
 
     
+
+  
