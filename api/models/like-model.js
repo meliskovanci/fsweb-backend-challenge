@@ -16,7 +16,7 @@ async function getById(user_id){
 async function getlikeByUser(userId) {
     return await db("likes")
         .join("tweets", "likes.tweet_id", "tweets.tweet_id")
-        .select("likes.like_id", "tweets.comment")
+        .select("likes.like_id", "tweets.text")
         .where("likes.user_id", userId);
 }
 
@@ -24,7 +24,7 @@ async function getByFilter(filter){
 
     return await db("likes as l")
     .leftJoin("tweets as t", "l.tweet_id","t.tweet_id")
-    .select("l.like_id","t.comment")
+    .select("l.like_id","t.text")
     .where("like_id",filter)
     .first()
 }
@@ -32,7 +32,7 @@ async function checkByTweetId(filter){
 
     return await db("likes as l")
     .leftJoin("tweets as t", "l.tweet_id","t.tweet_id")
-    .select("l.like_id","t.comment")
+    .select("l.like_id","t.text")
     .where("t.tweet_id",filter)
     .first()
 }
